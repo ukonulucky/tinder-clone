@@ -1,0 +1,36 @@
+    .chatButtons{
+    position: fixed;
+    bottom: 5vh;
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+    & > * {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #fff;
+        box-shadow: 0px 10px 53px 0px rgba(0,0,0,0.3);
+    }
+    .chatButtons__firstIcon{
+        
+        padding:1.5vw;
+        color: #f5b748;
+    }
+    .chatButtons__secondIcon{
+        padding:1.5vw;
+        color: #ec5e6f;
+    }
+    .chatButtons__thirdIcon{
+        padding:1.5vw;
+        color: #62b4f9;
+    }
+    .chatButtons__fourthIcon{
+        padding:1.5vw;
+        color: #76e2b3;
+    }
+    .chatButtons__fifthIcon{
+        padding:1.5vw;
+        color: #915dd1;
+        z-index: 3;
+    }
+}
