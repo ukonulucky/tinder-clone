@@ -1,8 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import axios from "axios"
+import axiosInitial from './axios.js'
 import "./styles/TinderCards.css"
 import TinderCard from "react-tinder-card"
 import "./styles/TinderCards.css"
 import { EscalatorRounded } from '@mui/icons-material'
+import Spinner from "./Spinner.jsx"
 function TinderCards() {
 
   const swiped = (dir, nameToremove) => {
@@ -12,15 +15,26 @@ function TinderCards() {
   const outOfFrame = (removedName) => {
   console.log(`${removedName} left the screen`)
   }
-    const [people, setpeople] = useState([{
-        name: "Elon Musc",
-        url:"https://media.gettyimages.com/photos/tesla-ceo-elon-musk-speaks-during-an-event-to-launch-the-new-tesla-x-picture-id490597838?k=20&m=490597838&s=612x612&w=0&h=iS2ZaGo4mu_ooqXzwivn4pFzxaYg-1FJ5VYMHzy1J5I="
-    },
-    {
-        name: "Jeff Bezos",
-        url:"https://media.gettyimages.com/photos/amazon-ceo-jeff-bezos-unveils-new-kindle-reading-devices-at-a-press-picture-id151367140?k=20&m=151367140&s=612x612&w=0&h=SlUilghFc20dXJHamiPtvPNa33P5JdiUVQalsqUPV2Y="
-        }])
-    
+  const [loader, setLoader] = useState(true)
+  const [people, setpeople] = useState([])
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const info = await axios.get("http://localhost:8001/tinder-clone/getCards");
+      if (info.data) {
+        // console.log(info.data)
+        setpeople([...info.data])
+        if (people !== []) {
+          setLoader(false)
+        }
+        }
+      } catch (err) {
+        console.log(err)
+        
+      }
+    }
+    getData()
+    },[])
     const TinderCardsImages = people.map((person, index) => 
     
     (
@@ -45,7 +59,7 @@ function TinderCards() {
     )
   
   console.log(`this is the TinderCardImages ${TinderCardsImages.toString()}`)
-  return (
+  return (loader ? <Spinner loader={ loader}/>:
     <div className="tinderCards">
       <div className="tinderCards__cardContainer">
            { TinderCardsImages }
